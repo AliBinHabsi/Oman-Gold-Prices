@@ -1,0 +1,119 @@
+<style>
+
+    #calculator {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-color: #30fc03;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 15px;
+    font-weight: bold; 
+
+    }
+    #price {
+      font-size: 30px;
+    }
+  </style>
+<div id="calculator">
+  
+
+  <label style="font-weight: bold; font-size: 22px;" for="unit">Select Unit:</label>
+  <select id="unit">
+    <option value="gram">Gram</option>
+    <option value="tola">Tola</option>
+    <option value="Ounce">Ounce</option>
+    <option value="Kilo">Kilo</option>
+    <option value="ratti">Ratti</option>
+    <option value="masha">Masha</option>
+
+  </select>
+
+  <label style="font-weight: bold; font-size: 22px;" for="karat">Select Purity:</label>
+  <select id="karat">
+    <option value="24">24k</option>
+    <option value="23">23k</option>
+    <option value="22">22k</option>
+    <option value="21">21k</option>
+    <option value="20">20k</option>
+    <option value="19">19k</option>
+    <option value="18">18k</option>
+    <option value="17">17k</option>
+    <option value="16">16k</option>
+    <option value="15">15k</option>
+    <option value="14">14k</option>
+    <option value="13">13k</option>
+    <option value="12">12k</option>
+    <option value="11">11k</option>
+    <option value="10">10k</option>
+    <option value="9">9k</option>
+    <option value="8">8k</option>
+    <option value="7">7k</option>
+    <option value="6">6k</option>
+    <option value="5">5k</option>
+    <option value="4">4k</option>
+    <option value="3">3k</option>
+    <option value="2">2k</option>
+    <option value="1">1k</option>
+  </select>
+
+  <label style="font-weight: bold; font-size: 22px;" for="weight">Enter Weight:</label>
+  <input type="number" id="weight" placeholder="Enter weight" />
+  
+
+  <button style="font-size: 20px" onclick="calculatePrice()">Calculate</button>
+  <h4 style=" font-color: #30fc03;">Approx Price </h4>
+
+  <div id="result">
+    <p id="price"></p>
+  </div>
+</div>
+<script>
+  function calculatePrice() {
+    const unit = document.getElementById("unit").value;
+    const karat = document.getElementById("karat").value;
+    const weight = parseFloat(document.getElementById("weight").value);
+
+    // Example pricing structure (replace with your actual pricing information)
+    const prices = {
+      gram: { 24: 28.86 , 23: 27.65  , 22: 26.45 , 21: 25.25 , 20: 24.05 , 19: 22.85 , 18: 21.64 , 17: 20.44 , 16: 19.24 , 15: 18.04 , 14:16.84 , 13: 15.64  , 12: 14.44 , 11: 13.23 , 10: 12.03 , 9: 10.83 , 8: 9.62  , 7: 8.42  , 6: 7.22 , 5: 6.01 , 4: 4.81 , 3: 3.61   , 2: 2.41 , 1: 1.20 },
+      Kilo:{ 24: 28849.79  , 23: 27641.09 , 22: 26439.30 , 21: 25232.59 , 20: 24031.04 , 19: 22829.49 , 18: 21627.94  , 17: 20426.38   , 16:19229.98 , 15: 18028.10 , 14: 16826.23  , 13: 15624.36 , 12: 14422.48 , 11: 13220.61 , 10: 12019.14 , 9: 10817.22  , 8: 9615.31  , 7:8413.40  , 6: 7208.51 , 5: 6007.09  , 4: 4805.67 , 3: 3604.25  , 2: 2402.84  , 1: 1201.67  },
+      tola: { 24: 336.40 , 23: 322.38 , 22: 308.36 , 21: 294.35 , 20: 280.33 , 19: 266.31 , 18: 252.40 , 17: 238.55 , 16: 224.52  , 15:210.49 , 14: 196.46 , 13: 182.42 , 12: 168.39 , 11: 154.36 , 10: 140.29  , 9: 126.26 , 8: 112.24  , 7: 98.21 , 6: 84.18 , 5: 70.15  , 4: 56.12 , 3: 42.09 , 2: 28.07 , 1: 14.03  },
+      ratti: { 24: 5.26 , 23: 5.04 , 22: 4.82 , 21: 4.60 , 20: 4.38 , 19: 4.16 , 18: 3.94 , 17: 3.72  , 16: 3.50 , 15: 3.29 , 14: 3.07  , 13: 2.85 , 12: 2.63 , 11: 2.41 , 10: 2.19 , 9: 1.97 , 8: 1.75 , 7: 1.53 , 6: 1.31 , 5: 1.09 , 4: 0.88 , 3: 0.66 , 2: 0.44 , 1: 0.22  },
+      masha: { 24: 30.51 , 23: 29.24 , 22: 27.97 , 21: 26.70 , 20: 25.42 , 19: 24.15  , 18: 22.88  , 17: 21.60  , 16: 20.33 , 15: 19.06  , 14: 17.80 , 13: 16.53 , 12: 15.26 , 11: 13.99 , 10: 12.72 , 9: 11.44 , 8: 10.18 , 7: 8.90  , 6: 7.63  , 5: 6.36 , 4: 5.09 , 3: 3.8  , 2: 2.54 , 1: 1.27 },
+      Ounce:{24: 898.12 , 23: 860.69 , 22: 823.27 , 21: 785.85 , 20: 748.43 , 19: 711.01 , 18: 673.59  , 17: 635.95  , 16: 598.54   , 15: 561.13 , 14: 523.72 , 13: 486.31 , 12: 449.07 , 11: 411.67  , 10: 374.25  , 9: 336.82  , 8: 299.40 , 7: 250.74  , 6: 224.54   , 5:187.12 , 4: 149.69 , 3: 112.27  , 2: 74.85  , 1: 37.42 },
+
+
+    };
+
+    const price = prices[unit][karat] * weight;
+
+    document.getElementById("price").innerText = `${price.toFixed(2)} OMR`;
+  }
+</script>
